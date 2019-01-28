@@ -1,0 +1,42 @@
+version: '3'
+
+networks:
+  readonlyrestnetwork:
+    driver: bridge
+
+services:
+  elastic:
+    build: ./elastic
+    depends_on:
+      - ldap
+      - prepare-ldap
+    networks:
+      - readonlyrestnetwork
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - xpack.security.enabled=false
+      - http.type=ssl_netty4
+    container_name: readonlyrest-elasticsearch
+
+  ldap:
+    image: osixia/openldap:1.2.3
+    networks:
+      - readonlyrestnetwork
+    ports:
+      - 389:389
+      - 636:636
+    environment:
+      - LDAP_ORGANISATION=autentia
+      - LDAP_DOMAIN=adictosaltrabajo.com
+      - LDAP_ADMIN_PASSWORD=autentia
+    container_name: readonlyrest-ldap
+
+  prepare-ldap:
+    build: ./prepare-ldap
+    depends_on:
+      - ldap
+    networks:
+      - readonlyrestnetwork
+    container_name: readonlyrest-prepare-ldap

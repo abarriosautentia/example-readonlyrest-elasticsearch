@@ -1,0 +1,23 @@
+# crear rama Grupos
+dn: ou=Grupos,dc=adictosaltrabajo,dc=com
+objectclass:organizationalunit
+ou: Grupos
+description: generic groups branch
+
+# crear grupo1 en Grupos
+dn: cn=grupo1,ou=Grupos,dc=adictosaltrabajo,dc=com
+objectclass: groupOfUniqueNames
+cn: grupo1
+uniqueMember: uid=usuario1,ou=Usuarios,dc=adictosaltrabajo,dc=com
+
+# crear grupo2 en Grupos
+dn: cn=grupo2,ou=Grupos,dc=adictosaltrabajo,dc=com
+objectclass: groupOfUniqueNames
+cn: grupo2
+uniqueMember: uid=usuario2,ou=Usuarios,dc=adictosaltrabajo,dc=com
+
+# crear grupo3 en Grupos
+dn: cn=grupo3,ou=Grupos,dc=adictosaltrabajo,dc=com
+objectclass: groupOfUniqueNames
+cn: grupo3
+uniqueMember: uid=usuario3,ou=Usuarios,dc=adictosaltrabajo,dc=com

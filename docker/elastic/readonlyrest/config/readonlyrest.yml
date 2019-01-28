@@ -1,0 +1,49 @@
+readonlyrest:
+  ssl:
+    enable: true
+    keystore_file: 'keystore.jks'
+    keystore_pass: autentia
+    key_pass: autentia
+
+  access_control_rules:
+    - name: 'Create and Bulk index access to all indices my_index* from users belong to grupo1'
+      ldap_authentication: 'my_ldap'
+      ldap_authorization:
+        name: 'my_ldap' # ldap name from 'ldaps' section
+        groups: ['grupo1'] # group within 'ou=Grupos,dc=adictosaltrabajo,dc=com'
+      indices: ['my_index*']
+      actions: ['indices:admin/create', 'indices:data/write/bulk']
+
+    - name: 'Read access to all indices my_index* from users belong to grupo2'
+      ldap_authentication: 'my_ldap'
+      ldap_authorization:
+        name: 'my_ldap' # ldap name from 'ldaps' section
+        groups: ['grupo2'] # group within 'ou=Grupos,dc=adictosaltrabajo,dc=com'
+      indices: ['my_index*']
+      actions: ['indices:data/read/*']
+
+    - name: 'Cluster access from users belong to grupo3'
+      ldap_authentication: 'my_ldap'
+      ldap_authorization:
+        name: 'my_ldap' # ldap name from 'ldaps' section
+        groups: ['grupo3'] # group within 'ou=Grupos,dc=adictosaltrabajo,dc=com'
+      actions: ['cluster:*']
+
+  ldaps:
+    - name: my_ldap
+      host: 'readonlyrest-ldap'
+      # port: 389                                                     # optional, default 389
+      ssl_enabled: false # optional, default true
+      ssl_trust_all_certs: true # optional, default false
+      bind_dn: 'cn=admin,dc=adictosaltrabajo,dc=com' # optional, skip for anonymous bind
+      bind_password: 'autentia' # optional, skip for anonymous bind
+      search_user_base_DN: 'ou=Usuarios,dc=adictosaltrabajo,dc=com'
+      user_id_attribute: 'uid' # optional, default "uid"
+      search_groups_base_DN: 'ou=Grupos,dc=adictosaltrabajo,dc=com'
+      unique_member_attribute: 'uniqueMember' # optional, default "uniqueMember"
+      connection_pool_size: 10 # optional, default 30
+      connection_timeout_in_sec: 10 # optional, default 1
+      request_timeout_in_sec: 10 # optional, default 1
+      cache_ttl_in_sec: 60 # optional, default 0 - cache disabled
+      group_search_filter: '(objectClass=groupOfUniqueNames)' # optional, default (cn=*)
+      group_name_attribute: 'cn' # optional, default "cn"

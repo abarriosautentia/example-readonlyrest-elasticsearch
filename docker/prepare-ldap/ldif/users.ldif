@@ -1,0 +1,25 @@
+# crear rama Usuarios
+dn: ou=Usuarios,dc=adictosaltrabajo,dc=com
+objectclass:organizationalunit
+ou: Usuarios
+
+# crear usuario1 en Usuarios
+dn: uid=usuario1,ou=Usuarios,dc=adictosaltrabajo,dc=com
+objectclass: inetOrgPerson
+uid: usuario1
+sn: Usuario1
+cn: Mi Usuario1
+
+# crear usuario2 en Usuarios
+dn: uid=usuario2,ou=Usuarios,dc=adictosaltrabajo,dc=com
+objectclass: inetOrgPerson
+uid: usuario2
+sn: Usuario2
+cn: Mi Usuario2
+
+# crear usuario3 en Usuarios
+dn: uid=usuario3,ou=Usuarios,dc=adictosaltrabajo,dc=com
+objectclass: inetOrgPerson
+uid: usuario3
+sn: Usuario3
+cn: Mi Usuario3
